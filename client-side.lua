@@ -79,10 +79,12 @@ end
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- CRIAR VEICULO
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+local veiculoAtual
 function criarVehicle(x,y,z,h,veiculo, extra)
-	local checkPos = GetClosestVehicle(x,y,z,3.001,0,71)
-	if DoesEntityExist(checkPos) and checkPos ~= nil then
-		TriggerEvent("Notify","importante","Todas as vagas estão ocupadas no momento.", 5)
+	-- local checkPos = GetClosestVehicle(x,y,z,3.001,0,71)
+	if veiculoAtual and DoesEntityExist(veiculoAtual) then
+		-- TriggerEvent("Notify","importante","Todas as vagas estão ocupadas no momento.", 5)
+		TriggerEvent("Notify", "importante", "Você já possui um veículo ativo.", 5)
 		return false
 	else
 		if veiculo then
@@ -105,10 +107,12 @@ function criarVehicle(x,y,z,h,veiculo, extra)
 				else
 					veiculoS = nveh
 				end
-				
+				veiculoAtual = nveh
+				return nveh
 			end
 		end
 	end
+	return false
 end
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -169,11 +173,40 @@ function DrawText3Ds(x,y,z,text)
 	local onScreen,_x,_y = World3dToScreen2d(x,y,z)
 	SetTextFont(4)
 	SetTextScale(0.35,0.35)
-	SetTextColour(255,255,255,150)
+	SetTextColour(255,255,255,255)
 	SetTextEntry("STRING")
 	SetTextCentre(1)
 	AddTextComponentString(text)
 	DrawText(_x,_y)
 	local factor = (string.len(text))/370
-	DrawRect(_x,_y+0.0125,0.01+factor,0.03,0,0,0,80)
+	DrawRect(_x,_y+0.0125,0.01+factor,0.03,0,0,0,150)
+end
+
+
+local pedlist = {
+	{ ['x'] = -615.34, ['y'] = -1787.39, ['z'] = 23.69, ['h'] = 212.64, ['hash'] = 0x14D7B4E0, ['hash2'] = "s_m_m_dockwork_01" },
+	{ ['x'] = 71.11, ['y'] = 108.36, ['z'] = 79.19, ['h'] = 340.38, ['hash'] = 0x1A021B83, ['hash2'] = "s_m_m_cntrybar_01" },
+	{ ['x'] = 751.93, ['y'] = 6458.95, ['z'] = 31.53, ['h'] = 57.62, ['hash'] = 0x2DC6D3E7, ['hash2'] = "ig_oneil" },
+	{ ['x'] = -841.72, ['y'] = 5401.01, ['z'] = 34.61, ['h'] = 299.15, ['hash'] = 0x0DE9A30A, ['hash2'] = "s_m_m_ammucountry" },
+}
+
+ 
+
+CreateThread(function()
+	for k,v in pairs(pedlist) do
+	 RequestModel(GetHashKey(v.hash2))
+	 while not HasModelLoaded(GetHashKey(v.hash2)) do Wait(100) end
+	 ped = CreatePed(4,v.hash,v.x,v.y,v.z-1,v.h,false,true)
+	 peds = ped
+	 FreezeEntityPosition(ped,true)
+	 SetEntityInvincible(ped,true)
+	 SetBlockingOfNonTemporaryEvents(ped,true)
+	end
+   end)
+
+
+
+
+function alert()
+	TriggerClientEvent("Notify",source,"importante","Você precisa de um machado para essa atividade!",10)
 end

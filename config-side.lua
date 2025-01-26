@@ -47,7 +47,7 @@ cfg.config = {
     },
 
     ["Lixeiro"] = {
-        price = math.random(500,700),
+        price = math.random(200,400),
         rotas = {
             [1] = { coords = vec3(154.6,-1046.18,29.28), visivel = true},
             [2] = { coords = vec3(153.81,-1048.48,29.25), visivel = true},

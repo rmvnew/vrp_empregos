@@ -27,7 +27,7 @@ Citizen.CreateThread(function()
 				local distance = #(playercoords - v.iniciar)
 				if distance <= 2.0 then
 					time = 5
-					DrawText3Ds(v.iniciar[1], v.iniciar[2], v.iniciar[3] - 0.1, "[~b~E~w~] PARA ENTRAR EM SERVIÇO.")
+					DrawText3Ds(v.iniciar[1], v.iniciar[2], v.iniciar[3] + 1.1, "[~b~E~w~] PARA ENTRAR EM SERVIÇO.")
 		
 					if IsControlJustReleased(1, 51) and segundos <= 0 and checkInService() then
 						segundos = 2
@@ -37,9 +37,10 @@ Citizen.CreateThread(function()
 				end
 			else
 				local distance2 = #(playercoords - v.pegarcaminhao)
-				if distance2 <= 2.0 then
+				if distance2 <= 5.0 then
 					time = 5
-					DrawText3Ds(v.pegarcaminhao[1], v.pegarcaminhao[2], v.pegarcaminhao[3] - 0.1, "[~b~E~w~] PARA PEGAR O CAMINHÃO.")
+					DrawText3Ds(v.pegarcaminhao[1], v.pegarcaminhao[2], v.pegarcaminhao[3] + 0.2, "[~b~E~w~] PARA PEGAR O CAMINHÃO.")
+					DrawMarker(36,v.pegarcaminhao[1],v.pegarcaminhao[2],v.pegarcaminhao[3] - 0.4, 0,0,0,0,0,0,1.0,1.0,1.0,10,102,255,180,0,0,0,1)
 					if IsControlJustReleased(1, 51) and segundos <= 0 then
 						segundos = 2
 						criarVehicle(742.94, 6454.68, 31.89, 89.105, "tractor2", false)
@@ -88,7 +89,8 @@ Citizen.CreateThread(function()
 								--SetVehicleUndriveable(vehicle, true)
 								SetTimeout(10*100, function()
 									--SetVehicleUndriveable(vehicle, false)
-									payment("Graos", 0, selecionado)						
+									payment("Graos", 0, selecionado)
+									PlaySoundFrontend(-1, "PURCHASE", "HUD_LIQUOR_STORE_SOUNDSET", true)
 									selecionado = math.random(#zonas)
 									RemoveBlip(blips)
 									CriandoBlipGraos(selecionado)

@@ -376,3 +376,4 @@ function src.giveIsca(quantidade)
         end
     end
 end
+

@@ -34,30 +34,8 @@ Citizen.CreateThread(function()
 				local distance = #(playercoords - v.iniciar)
 				if distance <= 7.0 then
 					time = 5
-					DrawText3Ds(v.iniciar[1],v.iniciar[2],v.iniciar[3]-0.1,"[~b~E~w~] PARA ENTRAR EM SERVIÇO.")
-					DrawMarker(
-                                27,
-                                v.iniciar[1],
-                                v.iniciar[2],
-                                v.iniciar[3] - 0.8,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                0,
-                                1.5,
-                                1.5,
-                                1.5,
-                                132,
-                                102,
-                                226,
-                                180,
-                                0,
-                                0,
-                                0,
-                                1
-                            )
+					DrawText3Ds(v.iniciar[1],v.iniciar[2],v.iniciar[3] + 1,"[~b~E~w~] PARA ENTRAR EM SERVIÇO.")
+					
 
 					if IsControlJustReleased(1, 51) and segundos <= 0 and checkInService() then
 						segundos = 10
@@ -151,7 +129,7 @@ Citizen.CreateThread(function()
 						time = 5
 						if IsControlJustReleased(1, 51) and not IsPedInAnyVehicle(PlayerPedId()) and segundos <= 0 and coletando then
 							coletando = false
-							segundos = 10
+							segundos = 5 --delay(cooldown) depois de depositar
 							
 							SetVehicleDoorOpen(veh,5,0,0)
 							vRP.playAnim(true,{{"mp_common","givetake1_a"}},false)
@@ -289,18 +267,3 @@ AddEventHandler("vrp_empregos:cash",function (source)
 
 end)
 
-local pedlist = {
-	{ ['x'] = -615.34, ['y'] = -1787.39, ['z'] = 23.69, ['h'] = 212.64, ['hash'] = 0x14D7B4E0, ['hash2'] = "s_m_m_dockwork_01" }
-}
-
-CreateThread(function()
-	for k,v in pairs(pedlist) do
-	 RequestModel(GetHashKey(v.hash2))
-	 while not HasModelLoaded(GetHashKey(v.hash2)) do Wait(100) end
-	 ped = CreatePed(4,v.hash,v.x,v.y,v.z-1,v.h,false,true)
-	 peds = ped
-	 FreezeEntityPosition(ped,true)
-	 SetEntityInvincible(ped,true)
-	 SetBlockingOfNonTemporaryEvents(ped,true)
-	end
-   end)

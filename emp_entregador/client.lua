@@ -26,8 +26,8 @@ Citizen.CreateThread(function()
 				local distance = #(playercoords - v.iniciar)
 				if distance <= 10.0 then
 					time = 5
-					DrawText3Ds(v.iniciar[1],v.iniciar[2],v.iniciar[3]-0.1,"Aperte ~b~E~w~ para entrar em serviço.")
-					DrawMarker(27,v.iniciar[1],v.iniciar[2],v.iniciar[3]- 0.8, 0,0,0,0,0,0,1.5,1.5,1.5,10,102,255,180,0,0,0,1)
+					DrawText3Ds(v.iniciar[1],v.iniciar[2],v.iniciar[3] + 1.2,"Aperte ~b~E~w~ para entrar em serviço.")
+					
 					
 
 					if IsControlJustReleased(1, 51) and segundos <= 0 and checkInService() then
@@ -40,14 +40,18 @@ Citizen.CreateThread(function()
 				end
 			else
 				local distance2 = #(playercoords - v.pegarcaminhao)
-				if distance2 <= 4.0 then
+				
+				if  distance2 <= 4.0 then
 					time = 5
-					DrawText3Ds(v.pegarcaminhao[1],v.pegarcaminhao[2],v.pegarcaminhao[3]-0.1,"Aperte ~b~E~w~ para pegar o caminhao.")
+					DrawText3Ds(v.pegarcaminhao[1],v.pegarcaminhao[2],v.pegarcaminhao[3]+ 0.4,"Aperte ~b~E~w~ para pegar o caminhao.")
 					DrawMarker(36,v.pegarcaminhao[1],v.pegarcaminhao[2],v.pegarcaminhao[3] - 0.4, 0,0,0,0,0,0,1.0,1.0,1.0,10,102,255,180,0,0,0,1)
 
 					if IsControlJustReleased(1, 51) and segundos <= 0 then
+						
 						segundos = 5
 						criarVehicle(69.31,117.84,79.13,164.86,"speedo", false)
+						
+
 					end
 				end
 
@@ -61,11 +65,11 @@ Citizen.CreateThread(function()
 					if IsControlJustReleased(1, 51) and segundos <= 0 then
 						segundos = 5
 						
-						local finished = vRP.taskBar(3500, math.random(10,20))
+						local finished = vRP.taskBar(2500, math.random(10,20))
 						if finished then
-							local finished = vRP.taskBar(3500, math.random(10,20))
+							local finished = vRP.taskBar(2500, math.random(10,20))
 							if finished then
-								local finished = vRP.taskBar(2500, math.random(10,20))
+								local finished = vRP.taskBar(1500, math.random(10,20))
 								if finished then
 									vSERVER._giveCaixas(math.random(1,3))
 								end
